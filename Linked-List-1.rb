@@ -20,7 +20,7 @@ end
 
 
 class Stack
-    attr_reader :data
+    attr_reader :data, :list
     
     def initialize
       @data = nil
@@ -30,28 +30,30 @@ class Stack
     def push(value)
       node = LinkedListNode.new(value, @data)
       @data = node
-
-        # IMPLEMENT ME!
     end
 
     # Pop an item off the stack.  
     # Remove the last item that was pushed onto the
     # stack and return the value to the user
-    def pop
+    def pop(value_out)
+      popped_value = value_out.value
+      puts popped_value
       @data = @data.next_node
-        return @data.value
     end
 
-
     def reverse_list(list)
+      newlist = Stack.new
 
-      reverselist = Stack.new
-
-      list.each do |value_to_move|
-        while value_to_move.next_node != nil
-          reverselist.push(list.pop)
-        end
+      while list.value != nil
+        newlist.push(list.value)
+        list = list.next_node
       end
+      puts newlist
+      
+    end
+
+    def reverse_lists(node)
+      puts node.printvalues
     end
 
     def print_values
@@ -65,8 +67,6 @@ class Stack
     end
 
 end
-
-
 
 
 node1 = LinkedListNode.new(37)
@@ -85,6 +85,7 @@ node3.print_values
 
 puts "............."
 
-revlist = reverse_list(node3)
+revlist = node3.reverse_list
 
 revlist.print_values
+
