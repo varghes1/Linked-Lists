@@ -21,30 +21,31 @@ class Stack
     @data = node
   end
 
-  def pop(node_out)
-    popped_value = node_out.value
-    return popped_value
+  def pop
+    popped_value = @data.value
     @data = @data.next_node
+    print popped_value
+    print " -->"
   end
+end
 
-  def reverse_list(list)
-    @list = list
-    newlist = Stack.new
-    while @list.value != nil
-      newlist.push(pop(@data))
-      @list = @list.next_node
-    end
-    return newlist
+def reverse_list(list)
+  @list = list
+  newlist = Stack.new
+  while @list.value != nil
+    newlist.push(pop(@data))
+    @list = @list.next_node
   end
+  return newlist
+end
 
-  def print_values(list_node)
-    if list_node
-      print "#{list_node.value} --> "
-      print_values(list_node.next_node)
-    else      
-      print "nil\n"
-      return
-    end
+def print_values(list_node)
+  if list_node
+    print "#{list_node.value} --> "
+    print_values(list_node.next_node)
+  else      
+    print "nil\n"
+    return
   end
 end
 
@@ -52,30 +53,20 @@ end
 node1 = LinkedListNode.new(37)
 node2 = LinkedListNode.new(99, node1)
 node3 = LinkedListNode.new(12, node2)
-#puts ((node3.next_node).next_node).value
-
-# stack = Stack.new
-# stack.push(37)
-# stack.push(99)
-# stack.push(12)
-# stack.data.print_values
-# other_stack = Stack.new
 
 print_values(node3)
 
 puts "............."
 
-revlist = reverse_list(node3)
+new_stack = Stack.new
+new_stack.push(12)
+new_stack.push(99)
+new_stack.push(37)
+puts new_stack.pop()
+puts new_stack.pop()
+puts new_stack.pop()
+puts new_stack.pop()
 
-print_values(revlist)
+#revlist = reverse_list(node3)
 
-
-# def reverse_list(takes in a node which is the head of the linked list)
-#   the arugment it took in needs to be made an instance variable
-#   create a variable which equals a new Stack so that nil is at the bottom
-#   while the argument.value is nil
-#     pop the top of the linkedlist and push it to the top of the newly created stack
-#     the instance variable that was created will now equal the next node in the argument passed
-#   end
-#   return the newly created stack
-# end
+#print_values(revlist)
