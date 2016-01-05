@@ -41,16 +41,15 @@ class Stack
       @data = @data.next_node
     end
 
-    def reverse_list(list)
+    def reverse_list
       newlist = Stack.new
-
       while list.value != nil
         newlist.push(list.value)
         list = list.next_node
       end
-      puts newlist
-      
     end
+
+
 
     def reverse_lists(node)
       puts node.printvalues
@@ -85,7 +84,7 @@ node3.print_values
 
 puts "............."
 
-revlist = node3.reverse_list
+revlist = node3(Stack.reverse_list)
 
 revlist.print_values
 
