@@ -1,3 +1,5 @@
+require "minitest/autorun"
+
 class LinkedListNode
   attr_accessor :value, :next_node
 
@@ -10,7 +12,7 @@ end
 
 
 class Stack
-  attr_reader :data, :list
+  attr_reader :data
   
   def initialize
     @data = nil
@@ -22,11 +24,44 @@ class Stack
   end
 
   def pop
+    if @data == nil
+      return nil
+    end
     popped_value = @data.value
     @data = @data.next_node
-    print popped_value
-    print " -->"
+    return popped_value
   end
+
+  def reverse!
+    rev_list = nil
+    while @data != nil
+      value = self.pop
+      rev_list = LinkedListNode.new(value, rev_list)
+    end
+    @data = rev_list
+  end
+
+  def reverse
+    rev_list = Stack.new
+    value = self.pop
+    while value != nil
+      rev_list.push(value)
+      value = self.pop
+    end
+    return rev_list
+  end
+
+  def reverse_mutate
+    old_head = @data
+    new_head = old_head.next_node
+    new_tail = new_head
+    while old_head.next_node != nil
+      old_head = old_head.next_node
+      new_tail = new_head
+    end
+    print_values(new_tail)
+  end
+
 end
 
 def reverse_list(list)
@@ -49,6 +84,52 @@ def print_values(list_node)
   end
 end
 
+class TestStack < MiniTest::Unit::TestCase
+
+  def test_pushpop
+    stack = Stack.new
+    stack.push(12)
+    stack.push(30)
+    stack.push(59)
+    first_value = stack.pop
+    assert_equal(59, first_value)
+    assert_equal(30, stack.pop)
+    assert_equal(12, stack.pop)
+  end
+
+  def test_reverse
+    stack = Stack.new
+    stack.push(12)
+    stack.push(30)
+    stack.push(59)
+    stack.reverse!
+    assert_equal(12, stack.pop)
+    assert_equal(30, stack.pop)
+    assert_equal(59, stack.pop)
+  end
+
+  def test_nil
+    stack = Stack.new
+    stack.push(12)
+    stack.pop
+    assert_equal(nil, stack.pop)
+  end
+
+  def test_reversemutate
+    stack = Stack.new
+    stack.push(12)
+    stack.push(30)
+    stack.push(59)
+    stack.reverse_mutate
+    assert_equal(12, stack.pop)
+    assert_equal(30, stack.pop)
+    assert_equal(59, stack.pop)
+  end
+
+end
+
+
+
 
 node1 = LinkedListNode.new(37)
 node2 = LinkedListNode.new(99, node1)
@@ -62,11 +143,13 @@ new_stack = Stack.new
 new_stack.push(12)
 new_stack.push(99)
 new_stack.push(37)
-puts new_stack.pop()
-puts new_stack.pop()
-puts new_stack.pop()
-puts new_stack.pop()
 
-#revlist = reverse_list(node3)
+puts " -------- "
 
-#print_values(revlist)
+new_stack.reverse_mutate
+
+# puts new_stack.pop()
+# puts new_stack.pop()
+# puts new_stack.pop()
+
+
