@@ -9,10 +9,8 @@ class LinkedListNode
 	end
 end
 
-
-
 class Stack
-  attr_reader :data
+  attr_accessor :data
   
   def initialize
     @data = nil
@@ -53,14 +51,26 @@ class Stack
 
   def reverse_mutate
     old_head = @data
-    new_head = old_head.next_node
-    new_tail = new_head
-    while old_head.next_node != nil
-      old_head = old_head.next_node
-      new_tail = new_head
+    new_head = @data.next_node
+    prev_next_node = nil
+    @data.next_node = prev_next_node
+    while new_head != nil
+      prev_next_node = new_head.next_node
+      new_head.next_node = old_head
+      new_head = prev_next_node
     end
-    print_values(new_tail)
+    print_values(@data)
   end
+
+  # def reverse_mutate
+  #   new_tail = nil
+  #   old_head = @data
+  #   new_head = old_head.next_node
+  #   while new_head != nil
+  #     new_tail = old_head
+  #     new_head = new_head.next_node
+  #   end
+  # end
 
 end
 
@@ -83,6 +93,8 @@ def print_values(list_node)
     return
   end
 end
+
+
 
 class TestStack < MiniTest::Unit::TestCase
 
@@ -138,15 +150,19 @@ node3 = LinkedListNode.new(12, node2)
 print_values(node3)
 
 puts "............."
+puts "NEEDS TO BE"
+puts "12 --> 99 --> 37 --> nil"
+puts "BUT YOU GET"
 
 new_stack = Stack.new
 new_stack.push(12)
 new_stack.push(99)
 new_stack.push(37)
 
-puts " -------- "
-
 new_stack.reverse_mutate
+
+
+
 
 # puts new_stack.pop()
 # puts new_stack.pop()
