@@ -51,26 +51,16 @@ class Stack
 
   def reverse_mutate
     old_head = @data
-    new_head = @data.next_node
-    prev_next_node = nil
-    @data.next_node = prev_next_node
-    while new_head != nil
-      prev_next_node = new_head.next_node
-      new_head.next_node = old_head
-      new_head = prev_next_node
+    @data = @data.next_node
+    prev_node = nil
+    old_head.next_node = prev_node
+    while old_head.next_node != nil
+      prev_node = @data.next_node
+      @data.next_node = old_head
+      @data = prev_node
     end
-    print_values(@data)
+    print_values(old_head)
   end
-
-  # def reverse_mutate
-  #   new_tail = nil
-  #   old_head = @data
-  #   new_head = old_head.next_node
-  #   while new_head != nil
-  #     new_tail = old_head
-  #     new_head = new_head.next_node
-  #   end
-  # end
 
 end
 
